@@ -62,14 +62,14 @@ def crossdomain(origin=None, methods=None, headers=None,
 
 # Retrieve a user's alarm time
 @app.route('/alarms/<username>', methods=['GET', 'OPTIONS'])
-@crossdomain(origin='*', headers='*')
+@crossdomain(origin='*', headers='Content-Type')
 def get_alarm(username=None):
     time = r.get(username)
     return jsonify({'time': time})
 
 # Save a user's alarm time
 @app.route('/alarms', methods=['POST', 'OPTIONS'])
-@crossdomain(origin='*', headers='*')
+@crossdomain(origin='*', headers='Content-Type')
 def save_alarm():
     data = request.data.split('&')
     username = data[0].split('=')[1]
