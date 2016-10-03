@@ -4,18 +4,20 @@ $(function(){
 	// Cache some selectors
 	var username;
 	var alarm_counter = -1;
+	
 	$(".get").click(function(){
-		username = $("#username").value;
-		$.ajax({
-			type: "GET",
-			url: 'http://localhost:5000/alarms',
-			data: username,
-			success: function(data){
-				alarm_clock = data;
-			},
-			dataType:"json"
-		});
+		username = $("#username").val();
+		$.get( 
+                  "http://localhost:5000/alarms/" + username,
+                  function(data) {
+					  alarm_counter = Number(data.time);
+
+				  }
+			
+			
+               );
 	});
+	console.log(alarm_counter);
 	var clock = $('#clock'),
 		alarm = clock.find('.alarm'),
 		ampm = clock.find('.ampm'),
@@ -23,10 +25,7 @@ $(function(){
 		alarm_set = $('#alarm-set'),
 		alarm_clear = $('#alarm-clear'),
 		time_is_up = $('#time-is-up').parent();
-
-	// This will hold the number of seconds left
-	// until the alarm should go off
-
+	
 	// Map digits to their names (this will be an array)
 	var digit_to_name = 'zero one two three four five six seven eight nine'.split(' ');
 
@@ -42,6 +41,10 @@ $(function(){
 	// and add them to the clock
 
 	var digit_holder = clock.find('.digits');
+	
+
+	// This will hold the number of seconds left
+	// until the alarm should go off
 
 	$.each(positions, function(){
 
@@ -234,7 +237,6 @@ $(function(){
 	}).on('show',function(){
 
 		// Calculate how much time is left for the alarm to go off.
-
 		var hours = 0, minutes = 0, seconds = 0, tmp = 0;
 
 		if(alarm_counter > 0){
