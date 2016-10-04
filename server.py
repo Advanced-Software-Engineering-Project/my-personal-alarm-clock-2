@@ -14,7 +14,7 @@ r = redis.StrictRedis(host='localhost', port=6379, db=0)
 app = Flask(__name__)
 
 
-
+# Decorator to set specific cross-origin policies for endpoints
 def crossdomain(origin=None, methods=None, headers=None,
                 max_age=21600, attach_to_all=True,
                 automatic_options=True):
@@ -57,15 +57,13 @@ def crossdomain(origin=None, methods=None, headers=None,
     return decorator
 
 
-
-
-
 # Retrieve a user's alarm time
 @app.route('/alarms/<username>', methods=['GET', 'OPTIONS'])
 @crossdomain(origin='*', headers='Content-Type')
 def get_alarm(username=None):
     time = r.get(username)
     return jsonify({'time': time})
+
 
 # Save a user's alarm time
 @app.route('/alarms', methods=['POST', 'OPTIONS'])
@@ -79,9 +77,5 @@ def save_alarm():
 
 
 
-
-
-
 if __name__ == '__main__':
     app.run(debug=True)
-
