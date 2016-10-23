@@ -14,11 +14,6 @@ r = redis.StrictRedis(host='localhost', port=6379, db=0)
 app = Flask(__name__)
 
 
-# Decorator to set specific cross-origin policies for endpoints
-def crossdomain(origin=None, methods=None, headers=None,
-                max_age=21600, attach_to_all=True,
-                automatic_options=True):
-    if methods is not None:
 
 
 # Retrieve a user's alarm time
