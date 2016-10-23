@@ -18,7 +18,6 @@ app = Flask(__name__)
 
 # Retrieve a user's alarm time
 @app.route('/alarms/<username>', methods=['GET', 'OPTIONS'])
-@crossdomain(origin='*', headers='Content-Type')
 def get_alarm(username=None):
     time = r.get(username)
     return jsonify({'time': time})
@@ -26,7 +25,6 @@ def get_alarm(username=None):
 
 # Save a user's alarm time
 @app.route('/alarms', methods=['POST', 'OPTIONS'])
-@crossdomain(origin='*', headers='Content-Type')
 def save_alarm():
     data = request.data.split('&')
     username = data[0].split('=')[1]
